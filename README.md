@@ -62,9 +62,9 @@ I'm a dedicated developer with a love for clean code, user experience, and conti
 
 ## 📊 GitHub Stats
 
-![Your GitHub stats](https://github-readme-stats.vercel.app/api?username=yourusername&show_icons=true&theme=radical)
+![Your GitHub stats](https://github-readme-stats.vercel.app/api?username=nonnumbered&show_icons=true&theme=radical)
 
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=yourusername&layout=compact&theme=radical)
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=nonnumbered&layout=compact&theme=radical)
 
 ---
 
@@ -108,5 +108,5 @@ I'm always open to discussing new opportunities, interesting projects, or just h
 
 *Feel free to reach out if you'd like to collaborate on something amazing!*
 
-[![Profile Views](https://komarev.com/ghpvc/?username=yourusername&color=brightgreen)](https://github.com/nonnumbered)
+[![Profile Views](https://komarev.com/ghpvc/?username=nonnumbered&color=brightgreen)](https://github.com/nonnumbered)
 </div>
