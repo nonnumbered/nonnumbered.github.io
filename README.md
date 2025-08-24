@@ -70,16 +70,20 @@ I'm a dedicated developer with a love for clean code, user experience, and conti
 
 ## 🏆 Achievements & Certifications
 
+### **Java Certified** | Suncoast High School
+*May 2025 - Present*
+- Achieved Java certification through rigorous coursework and examination
+- Developed strong foundational and advanced Java programming skills
+- Participated in collaborative coding projects and peer code reviews
 
 
 ---
 
 ## 🌟 What I'm Working On
 
-- 🔧 Building a new portfolio website with Next.js
-- 📚 Learning Rust and WebAssembly
-- 🤖 Contributing to open-source AI projects
-- 📱 Developing a mobile app for productivity
+- java deploma
+- asm
+- html & css
 
 ---
 
@@ -108,5 +112,4 @@ I'm always open to discussing new opportunities, interesting projects, or just h
 
 *Feel free to reach out if you'd like to collaborate on something amazing!*
 
-[![Profile Views](https://komarev.com/ghpvc/?username=nonnumbered&color=brightgreen)](https://github.com/nonnumbered)
 </div>
