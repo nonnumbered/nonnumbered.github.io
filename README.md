@@ -27,8 +27,7 @@ Visit the live portfolio: [https://nonnumbered.github.io](https://nonnumbered.gi
 ```
 nonnumbered.github.io/
 ├── index.html          # Main portfolio page
-├── README.md           # Project documentation
-└── portfolio.html      # Alternative portfolio file
+└──  README.md           # Project documentation
 ```
 
 ## 🚀 Getting Started
@@ -156,3 +155,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 **Made with ❤️ by nonnumbered**
 
 *Feel free to use this template for your own portfolio!*
+
