@@ -668,7 +668,13 @@
                     <p class="project-description">This very portfolio website, built with modern HTML and CSS, featuring smooth animations and responsive design.</p>
                     <span class="project-status">Completed</span>
                 </div>
-            </div>
+                  </div>
+                  <div class="project-card">
+                    <h3 class="project-title">health website</h3>
+                    <p class="project-description">A web application designed to help users manage their health and wellness, featuring personalized health tracking and resources.</p>
+                    <span class="project-status">In Progress</span>
+                  </div>
+                </div>
         </div>
     </section>
 
@@ -676,7 +682,6 @@
     <section id="experience" class="fade-in">
         <div class="container">
             <h2 class="section-title">Experience</h2>
-            <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-marker"></div>
                     <div class="timeline-content">
@@ -832,7 +837,7 @@
         const name = document.querySelector('.name');
         const text = name.textContent;
         name.textContent = '';
-        
+
         let i = 0;
         const typeWriter = () => {
             if (i < text.length) {
@@ -841,7 +846,7 @@
                 setTimeout(typeWriter, 100);
             }
         };
-        
+
         setTimeout(typeWriter, 1000);
     </script>
 </body>
