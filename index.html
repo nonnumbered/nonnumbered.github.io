@@ -577,6 +577,7 @@
 <body>
     <!-- Header -->
     <header>
+        <canvas id="nn-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:auto;"></canvas>
         <div class="container">
             <div class="header-content">
                 <h1 class="name">Hi, I'm nonnumbered</h1>
@@ -584,6 +585,100 @@
                 <p class="subtitle">Welcome to my portfolio. I'm passionate about creating innovative solutions and building amazing digital experiences.</p>
             </div>
         </div>
+    <script>
+    // Interactive Neural Network Animation
+    window.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('nn-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = document.querySelector('header').offsetHeight;
+        let mouse = { x: width/2, y: height/2 };
+        const NODES = 24;
+        const nodes = [];
+        const links = [];
+        // Node generation
+        for (let i = 0; i < NODES; i++) {
+            nodes.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random()-0.5)*0.7,
+                vy: (Math.random()-0.5)*0.7,
+                r: 5 + Math.random()*2
+            });
+        }
+        // Link generation (randomly connect nodes)
+        for (let i = 0; i < NODES; i++) {
+            for (let j = i+1; j < NODES; j++) {
+                if (Math.random() < 0.18) {
+                    links.push([i, j]);
+                }
+            }
+        }
+        // Mouse interaction
+        canvas.addEventListener('mousemove', e => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+        });
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = document.querySelector('header').offsetHeight;
+        });
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+            // Draw links
+            ctx.save();
+            ctx.globalAlpha = 0.5;
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 1.2;
+            for (const [i, j] of links) {
+                ctx.beginPath();
+                ctx.moveTo(nodes[i].x, nodes[i].y);
+                ctx.lineTo(nodes[j].x, nodes[j].y);
+                ctx.stroke();
+            }
+            ctx.restore();
+            // Draw nodes
+            for (const node of nodes) {
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, node.r, 0, 2*Math.PI);
+                ctx.fillStyle = '#fff';
+                ctx.shadowColor = '#fff';
+                ctx.shadowBlur = 8;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+        function update() {
+            for (const node of nodes) {
+                // Move nodes
+                node.x += node.vx;
+                node.y += node.vy;
+                // Bounce off edges
+                if (node.x < node.r || node.x > width-node.r) node.vx *= -1;
+                if (node.y < node.r || node.y > height-node.r) node.vy *= -1;
+                // Mouse repulsion
+                const dx = node.x - mouse.x;
+                const dy = node.y - mouse.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < 80) {
+                    node.vx += dx/dist*0.2;
+                    node.vy += dy/dist*0.2;
+                }
+                // Limit velocity
+                node.vx = Math.max(-1.2, Math.min(1.2, node.vx));
+                node.vy = Math.max(-1.2, Math.min(1.2, node.vy));
+            }
+        }
+        function animate() {
+            update();
+            draw();
+            requestAnimationFrame(animate);
+        }
+        animate();
+    });
+    </script>
     </header>
 
     <!-- Navigation -->
