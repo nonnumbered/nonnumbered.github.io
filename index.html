@@ -31,242 +31,232 @@
 
             .container {
                 max-width: 100%;
-                height: 100vh;
+                min-height: 100vh;
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
+                justify-content: flex-start;
                 align-items: center;
-                padding: 20px;
+                padding: 40px 20px;
             }
 
             .ascii-art {
-                font-size: 1.2rem;
+                font-size: 1.8rem;
                 text-align: center;
-                margin-bottom: 40px;
+                margin-bottom: 100px;
                 white-space: pre;
                 color: var(--accent);
-                letter-spacing: 0.05em;
-                line-height: 1.2;
+                letter-spacing: 0.2em;
+                line-height: 1.6;
+                font-weight: bold;
+                font-family: "Courier New", monospace;
             }
 
-            nav {
-                display: flex;
-                flex-direction: column;
-                gap: 16px;
-                text-align: center;
-            }
-
-            nav a {
-                color: var(--fg);
-                text-decoration: none;
-                padding: 12px 24px;
-                border: 1px solid rgba(139, 92, 246, 0.3);
-                border-radius: 4px;
-                font-size: 1rem;
-                font-weight: 600;
-                font-family: "Courier New", Courier, monospace;
-                transition: all 0.15s ease;
-                cursor: pointer;
-            }
-
-            nav a:hover {
-                color: var(--accent);
-                background: rgba(139, 92, 246, 0.1);
-                border-color: var(--accent);
-            }
-
-            .page {
-                display: none;
-                max-width: 920px;
+            .menu-wrapper {
                 width: 100%;
-                animation: fadeIn 0.3s ease;
+                max-width: 800px;
+                display: flex;
+                gap: 0;
+                border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+                position: relative;
             }
 
-            .page.active {
+            .menu-section {
+                flex: 1;
+                border-right: 1px solid rgba(139, 92, 246, 0.2);
+            }
+
+            .menu-section:last-child {
+                border-right: none;
+            }
+
+            .menu-title {
+                color: var(--accent);
+                cursor: pointer;
+                padding: 16px 12px;
+                user-select: none;
+                font-weight: 600;
+                transition:
+                    color 0.15s ease,
+                    background 0.15s ease;
+                text-align: center;
+                border: none;
+            }
+
+            .menu-title:hover {
+                color: var(--fg);
+            }
+
+            .menu-content {
+                display: none;
+                padding: 24px;
+                border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg);
+                z-index: 10;
+            }
+
+            .menu-content.active {
                 display: block;
             }
 
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                }
-                to {
-                    opacity: 1;
-                }
-            }
-
-            .page h2 {
-                font-size: 1.2rem;
-                color: var(--accent);
-                margin-bottom: 20px;
-                border-bottom: 1px solid rgba(139, 92, 246, 0.2);
-                padding-bottom: 10px;
-            }
-
-            .page p {
+            .menu-content p {
                 line-height: 1.6;
-                margin-bottom: 16px;
+                margin: 0 0 12px 0;
                 color: var(--fg);
+            }
+
+            .menu-content p:last-child {
+                margin-bottom: 0;
             }
 
             .tags {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 12px;
-                margin-top: 16px;
+                gap: 8px;
+                margin: 12px 0;
             }
 
             .tag {
                 background: rgba(139, 92, 246, 0.06);
-                padding: 8px 16px;
+                padding: 6px 12px;
                 border-radius: 4px;
-                font-size: 0.95rem;
+                font-size: 0.9rem;
                 color: var(--accent);
                 border: 1px solid rgba(139, 92, 246, 0.14);
             }
 
-            .back-btn {
-                margin-top: 32px;
-                padding: 10px 20px;
-                background: rgba(139, 92, 246, 0.1);
-                border: 1px solid var(--accent);
+            a {
                 color: var(--accent);
-                border-radius: 4px;
+                text-decoration: none;
                 cursor: pointer;
-                font-family: "Courier New", Courier, monospace;
-                font-weight: 600;
-                transition: all 0.15s ease;
             }
 
-            .back-btn:hover {
-                background: rgba(139, 92, 246, 0.2);
+            a:hover {
+                text-decoration: underline;
             }
 
             @media (max-width: 600px) {
                 .ascii-art {
-                    font-size: 0.8rem;
-                    margin-bottom: 30px;
+                    font-size: 1.2rem;
+                    margin-bottom: 40px;
+                    letter-spacing: 0.15em;
                 }
-                nav a {
-                    padding: 10px 16px;
-                    font-size: 0.95rem;
+                .container {
+                    padding: 20px 20px;
                 }
             }
         </style>
     </head>
     <body>
         <div class="container">
-            <!-- Home Page -->
-            <div class="page active" id="home">
-                <div class="ascii-art">
-                    ██████╗ ██████╗ ███████╗███████╗ ███████╗██╗
-                    ██╗███████╗███████╗ ██╔════╝██╔═══██╗██╔════╝██╔════╝
-                    ██╔════╝██║ ██║╚════██║██╔════╝ ╚█████╗ ██║
-                    ██║███████╗█████╗ ███████╗███████║ ██╔╝███████╗ ╚═══██╗██║
-                    ██║╚════██║██╔══╝ ╚════██║██╔══██║ ██╔╝ ╚════██║
-                    ╚██████╝╚██████╔╝███████║███████╗ ███████║██║ ██║ ██║
-                    ███████║ ╚═════╝ ╚═════╝ ╚══════╝╚══════╝ ╚══════╝╚═╝ ╚═╝
-                    ╚═╝ ╚══════╝
+            <div class="ascii-art">
+                ███╗ ██╗ ██████╗ ███╗ ██╗███╗ ██╗██╗ ██╗ ████╗ ██║██╔═══██╗████╗
+                ██║████╗ ██║██║ ██║ ██╔██╗ ██║██║ ██║██╔██╗ ██║██╔██╗ ██║██║ ██║
+                ██║╚██╗██║██║ ██║██║╚██╗██║██║╚██╗██║██║ ██║ ██║
+                ╚████║╚██████╔╝██║ ╚████║██║ ╚████║╚██████╔╝ ╚═╝ ╚═══╝ ╚═════╝
+                ╚═╝ ╚═══╝╚═╝ ╚═══╝ ╚═════╝
+            </div>
+
+            <div class="menu-wrapper">
+                <div class="menu-section">
+                    <div class="menu-title" onclick="toggleMenu('about')">
+                        > about
+                    </div>
+                    <div class="menu-content" id="about">
+                        <p>
+                            I am a developer whose main talent is computer
+                            science.
+                        </p>
+                        <p>What drives me:</p>
+                        <div class="tags">
+                            <span class="tag">FOSS</span>
+                            <span class="tag">nice UI/UX</span>
+                            <span class="tag">simplicity</span>
+                        </div>
+                        <p style="margin-top: 12px">
+                            I believe in the power of technology to solve
+                            problems and create meaningful impact. Every project
+                            is an opportunity to learn something new and push
+                            boundaries.
+                        </p>
+                    </div>
                 </div>
-                <nav id="main-nav">
-                    <a href="#" onclick="showPage('about')">about</a>
-                    <a href="#" onclick="showPage('skills')">skills</a>
-                    <a href="#" onclick="showPage('projects')">projects</a>
-                    <a href="#" onclick="showPage('contact')">contact</a>
-                </nav>
-            </div>
 
-            <!-- About Page -->
-            <div class="page" id="about">
-                <h2>> about</h2>
-                <p>I am a developer whose main talent is computer science.</p>
-                <p>What drives me:</p>
-                <div class="tags">
-                    <span class="tag">FOSS</span>
-                    <span class="tag">nice UI/UX</span>
-                    <span class="tag">simplicity</span>
+                <div class="menu-section">
+                    <div class="menu-title" onclick="toggleMenu('skills')">
+                        > skills
+                    </div>
+                    <div class="menu-content" id="skills">
+                        <p>Languages & technologies I work with:</p>
+                        <div class="tags">
+                            <span class="tag">Java</span>
+                            <span class="tag">Rust</span>
+                            <span class="tag">Linux</span>
+                        </div>
+                        <p style="margin-top: 12px">
+                            Currently exploring system programming, performance
+                            optimization, and open source development.
+                        </p>
+                    </div>
                 </div>
-                <p style="margin-top: 20px">
-                    I believe in the power of technology to solve problems and
-                    create meaningful impact. Every project is an opportunity to
-                    learn something new and push boundaries.
-                </p>
-                <button class="back-btn" onclick="showPage('home')">
-                    [ back ]
-                </button>
-            </div>
 
-            <!-- Skills Page -->
-            <div class="page" id="skills">
-                <h2>> skills</h2>
-                <p>Languages & technologies I work with:</p>
-                <div class="tags">
-                    <span class="tag">Java</span>
-                    <span class="tag">Rust</span>
-                    <span class="tag">Linux</span>
+                <div class="menu-section">
+                    <div class="menu-title" onclick="toggleMenu('projects')">
+                        > projects
+                    </div>
+                    <div class="menu-content" id="projects">
+                        <p>
+                            <strong>Portfolio Website</strong><br />
+                            Clean, minimal design with a focus on typography and
+                            simplicity.
+                        </p>
+                        <p>
+                            <strong>Health Website</strong><br />
+                            In progress — a web application for health and
+                            wellness tracking.
+                        </p>
+                    </div>
                 </div>
-                <p style="margin-top: 24px">
-                    Currently exploring system programming, performance
-                    optimization, and open source development.
-                </p>
-                <button class="back-btn" onclick="showPage('home')">
-                    [ back ]
-                </button>
-            </div>
 
-            <!-- Projects Page -->
-            <div class="page" id="projects">
-                <h2>> projects</h2>
-                <p>
-                    <strong>Portfolio Website</strong><br />
-                    Clean, minimal design with a focus on typography and
-                    simplicity.
-                </p>
-                <p>
-                    <strong>Health Website</strong><br />
-                    In progress — a web application for health and wellness
-                    tracking.
-                </p>
-                <button class="back-btn" onclick="showPage('home')">
-                    [ back ]
-                </button>
-            </div>
-
-            <!-- Contact Page -->
-            <div class="page" id="contact">
-                <h2>> contact</h2>
-                <p>Open to full-time, freelance, and open source work.</p>
-                <p>
-                    <strong>GitHub:</strong>
-                    <a
-                        href="https://github.com/nonnumbered"
-                        target="_blank"
-                        style="color: var(--accent); text-decoration: none"
-                        >github.com/nonnumbered</a
-                    >
-                </p>
-                <p>
-                    <strong>Email:</strong>
-                    <a
-                        href="mailto:nonnumbered@gmail.com"
-                        style="color: var(--accent); text-decoration: none"
-                        >nonnumbered@gmail.com</a
-                    >
-                </p>
-                <button class="back-btn" onclick="showPage('home')">
-                    [ back ]
-                </button>
+                <div class="menu-section">
+                    <div class="menu-title" onclick="toggleMenu('contact')">
+                        > contact
+                    </div>
+                    <div class="menu-content" id="contact">
+                        <p>
+                            Open to full-time, freelance, and open source work.
+                        </p>
+                        <p>
+                            <strong>GitHub:</strong><br />
+                            <a
+                                href="https://github.com/nonnumbered"
+                                target="_blank"
+                                rel="noopener"
+                                >github.com/nonnumbered</a
+                            >
+                        </p>
+                        <p>
+                            <strong>Email:</strong><br />
+                            <a href="mailto:nonnumbered@gmail.com"
+                                >nonnumbered@gmail.com</a
+                            >
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <script>
-            function showPage(pageId) {
-                // Hide all pages
-                document
-                    .querySelectorAll(".page")
-                    .forEach((page) => page.classList.remove("active"));
-                // Show selected page
-                document.getElementById(pageId).classList.add("active");
+            function toggleMenu(id) {
+                // Close all menus
+                document.querySelectorAll(".menu-content").forEach((menu) => {
+                    menu.classList.remove("active");
+                });
+                // Open clicked menu
+                document.getElementById(id).classList.add("active");
             }
         </script>
     </body>
