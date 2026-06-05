@@ -7,10 +7,9 @@
         <style>
             :root {
                 --bg: #000000;
-                --panel: #0b0b0b;
-                --fg: #efeaff; /* very light purple for readable text */
-                --muted: #bfb5d9; /* soft muted purple */
-                --accent: #8b5cf6; /* main purple highlight */
+                --fg: #efeaff;
+                --muted: #bfb5d9;
+                --accent: #8b5cf6;
             }
             * {
                 box-sizing: border-box;
@@ -18,254 +17,257 @@
             html,
             body {
                 height: 100%;
+                margin: 0;
+                padding: 0;
             }
             body {
-                margin: 0;
-                font-family:
-                    Inter,
-                    system-ui,
-                    -apple-system,
-                    "Segoe UI",
-                    Roboto,
-                    "Helvetica Neue",
-                    Arial;
+                font-family: "Courier New", Courier, monospace;
                 background: var(--bg);
                 color: var(--fg);
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
-                line-height: 1.5;
-            }
-            .container {
-                max-width: 920px;
-                margin: 0 auto;
-                padding: 36px;
+                line-height: 1.4;
             }
 
-            header {
-                padding: 64px 0;
+            .container {
+                max-width: 100%;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+            }
+
+            .ascii-art {
+                font-size: 1.2rem;
                 text-align: center;
-            }
-            .brand {
-                font-weight: 700;
-                font-size: 0.95rem;
-                letter-spacing: 0.06em;
+                margin-bottom: 40px;
+                white-space: pre;
                 color: var(--accent);
-            }
-            .name {
-                font-size: 2.6rem;
-                margin: 6px 0;
-                color: var(--accent);
-            }
-            .role {
-                color: var(--muted);
-                font-weight: 400;
-            }
-            .subtitle {
-                margin-top: 12px;
-                color: var(--muted);
-                max-width: 70%;
-                margin-left: auto;
-                margin-right: auto;
+                letter-spacing: 0.05em;
+                line-height: 1.2;
             }
 
             nav {
                 display: flex;
-                justify-content: center;
+                flex-direction: column;
                 gap: 16px;
-                padding: 10px 0;
-            }
-            nav a {
-                color: var(--muted);
-                text-decoration: none;
-                padding: 8px 12px;
-                border-radius: 10px;
-                font-weight: 600;
-            }
-            nav a:hover {
-                color: var(--fg);
-                background: rgba(
-                    139,
-                    92,
-                    246,
-                    0.1
-                ); /* subtle purple highlight */
+                text-align: center;
             }
 
-            .section {
-                padding: 40px 0;
-                border-top: 1px solid rgba(255, 255, 255, 0.03);
+            nav a {
+                color: var(--fg);
+                text-decoration: none;
+                padding: 12px 24px;
+                border: 1px solid rgba(139, 92, 246, 0.3);
+                border-radius: 4px;
+                font-size: 1rem;
+                font-weight: 600;
+                font-family: "Courier New", Courier, monospace;
+                transition: all 0.15s ease;
+                cursor: pointer;
             }
-            .section h2 {
-                font-size: 1.05rem;
-                margin-bottom: 8px;
+
+            nav a:hover {
+                color: var(--accent);
+                background: rgba(139, 92, 246, 0.1);
+                border-color: var(--accent);
             }
-            .muted {
-                color: var(--muted);
+
+            .page {
+                display: none;
+                max-width: 920px;
+                width: 100%;
+                animation: fadeIn 0.3s ease;
             }
-            .grid {
-                display: grid;
-                gap: 12px;
+
+            .page.active {
+                display: block;
             }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            .page h2 {
+                font-size: 1.2rem;
+                color: var(--accent);
+                margin-bottom: 20px;
+                border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+                padding-bottom: 10px;
+            }
+
+            .page p {
+                line-height: 1.6;
+                margin-bottom: 16px;
+                color: var(--fg);
+            }
+
             .tags {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 8px;
+                gap: 12px;
+                margin-top: 16px;
             }
+
             .tag {
                 background: rgba(139, 92, 246, 0.06);
-                padding: 6px 12px;
-                border-radius: 999px;
-                font-size: 0.92rem;
+                padding: 8px 16px;
+                border-radius: 4px;
+                font-size: 0.95rem;
                 color: var(--accent);
                 border: 1px solid rgba(139, 92, 246, 0.14);
             }
 
-            .card {
-                background: rgba(255, 255, 255, 0.02);
-                padding: 14px;
-                border-radius: 10px;
-            }
-            .buttons {
-                display: flex;
-                gap: 12px;
-                margin-top: 12px;
-                flex-wrap: wrap;
-            }
-            a.button {
-                display: inline-block;
-                background: var(--accent);
-                color: var(--bg);
-                padding: 10px 14px;
-                border-radius: 999px;
-                text-decoration: none;
-                font-weight: 700;
-                box-shadow: 0 6px 18px rgba(139, 92, 246, 0.16);
-                transition:
-                    transform 0.12s ease,
-                    box-shadow 0.12s ease;
-            }
-            a.button:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 10px 30px rgba(139, 92, 246, 0.22);
+            .back-btn {
+                margin-top: 32px;
+                padding: 10px 20px;
+                background: rgba(139, 92, 246, 0.1);
+                border: 1px solid var(--accent);
+                color: var(--accent);
+                border-radius: 4px;
+                cursor: pointer;
+                font-family: "Courier New", Courier, monospace;
+                font-weight: 600;
+                transition: all 0.15s ease;
             }
 
-            .footer {
-                padding: 36px 0;
-                text-align: center;
-                color: var(--muted);
+            .back-btn:hover {
+                background: rgba(139, 92, 246, 0.2);
             }
 
             @media (max-width: 600px) {
-                .name {
-                    font-size: 1.8rem;
+                .ascii-art {
+                    font-size: 0.8rem;
+                    margin-bottom: 30px;
                 }
-                .container {
-                    padding: 20px;
-                }
-                .subtitle {
-                    max-width: 100%;
+                nav a {
+                    padding: 10px 16px;
+                    font-size: 0.95rem;
                 }
             }
         </style>
     </head>
     <body>
         <div class="container">
-            <header>
-                <div class="brand">nonnumbered</div>
-                <h1 class="name">Hi — I'm nonnumbered</h1>
-                <div class="role">
-                    Java developer · billiards player · tech enthusiast
+            <!-- Home Page -->
+            <div class="page active" id="home">
+                <div class="ascii-art">
+                    ██████╗ ██████╗ ███████╗███████╗ ███████╗██╗
+                    ██╗███████╗███████╗ ██╔════╝██╔═══██╗██╔════╝██╔════╝
+                    ██╔════╝██║ ██║╚════██║██╔════╝ ╚█████╗ ██║
+                    ██║███████╗█████╗ ███████╗███████║ ██╔╝███████╗ ╚═══██╗██║
+                    ██║╚════██║██╔══╝ ╚════██║██╔══██║ ██╔╝ ╚════██║
+                    ╚██████╝╚██████╔╝███████║███████╗ ███████║██║ ██║ ██║
+                    ███████║ ╚═════╝ ╚═════╝ ╚══════╝╚══════╝ ╚══════╝╚═╝ ╚═╝
+                    ╚═╝ ╚══════╝
                 </div>
-                <p class="subtitle">
-                    I like simple, useful software and pleasant dark UIs. I care
-                    about FOSS, UX and learning by building.
+                <nav id="main-nav">
+                    <a href="#" onclick="showPage('about')">about</a>
+                    <a href="#" onclick="showPage('skills')">skills</a>
+                    <a href="#" onclick="showPage('projects')">projects</a>
+                    <a href="#" onclick="showPage('contact')">contact</a>
+                </nav>
+            </div>
+
+            <!-- About Page -->
+            <div class="page" id="about">
+                <h2>> about</h2>
+                <p>I am a developer whose main talent is computer science.</p>
+                <p>What drives me:</p>
+                <div class="tags">
+                    <span class="tag">FOSS</span>
+                    <span class="tag">nice UI/UX</span>
+                    <span class="tag">simplicity</span>
+                </div>
+                <p style="margin-top: 20px">
+                    I believe in the power of technology to solve problems and
+                    create meaningful impact. Every project is an opportunity to
+                    learn something new and push boundaries.
                 </p>
-            </header>
+                <button class="back-btn" onclick="showPage('home')">
+                    [ back ]
+                </button>
+            </div>
 
-            <nav>
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-            </nav>
-
-            <section id="about" class="section">
-                <h2>About</h2>
-                <p>
-                    I am a degen whose main talent is computer science. Every
-                    project is an opportunity to learn and improve.
-                </p>
-            </section>
-
-            <section id="skills" class="section">
-                <h2>Skills</h2>
+            <!-- Skills Page -->
+            <div class="page" id="skills">
+                <h2>> skills</h2>
+                <p>Languages & technologies I work with:</p>
                 <div class="tags">
                     <span class="tag">Java</span>
-                    <span class="tag">Python</span>
                     <span class="tag">Rust</span>
-                    <span class="tag">HTML</span>
-                    <span class="tag">CSS</span>
                     <span class="tag">Linux</span>
-                    <span class="tag">x64 Assembly</span>
                 </div>
-            </section>
-
-            <section id="projects" class="section">
-                <h2>Projects</h2>
-                <div class="grid">
-                    <div class="card">
-                        <strong>Portfolio website</strong>
-                        <div class="muted">
-                            This very site — clean and minimal.
-                        </div>
-                    </div>
-                    <div class="card">
-                        <strong>Health website</strong>
-                        <div class="muted">
-                            In progress — health & wellness tracking app.
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="contact" class="section">
-                <h2>Contact</h2>
-                <p class="muted">
-                    Open to full-time, freelance, and open source contributions.
+                <p style="margin-top: 24px">
+                    Currently exploring system programming, performance
+                    optimization, and open source development.
                 </p>
-                <div class="buttons">
+                <button class="back-btn" onclick="showPage('home')">
+                    [ back ]
+                </button>
+            </div>
+
+            <!-- Projects Page -->
+            <div class="page" id="projects">
+                <h2>> projects</h2>
+                <p>
+                    <strong>Portfolio Website</strong><br />
+                    Clean, minimal design with a focus on typography and
+                    simplicity.
+                </p>
+                <p>
+                    <strong>Health Website</strong><br />
+                    In progress — a web application for health and wellness
+                    tracking.
+                </p>
+                <button class="back-btn" onclick="showPage('home')">
+                    [ back ]
+                </button>
+            </div>
+
+            <!-- Contact Page -->
+            <div class="page" id="contact">
+                <h2>> contact</h2>
+                <p>Open to full-time, freelance, and open source work.</p>
+                <p>
+                    <strong>GitHub:</strong>
                     <a
-                        class="button"
                         href="https://github.com/nonnumbered"
                         target="_blank"
-                        rel="noopener"
-                        >GitHub</a
+                        style="color: var(--accent); text-decoration: none"
+                        >github.com/nonnumbered</a
                     >
-                    <a class="button" href="mailto:nonnumbered@gmail.com"
-                        >Email</a
+                </p>
+                <p>
+                    <strong>Email:</strong>
+                    <a
+                        href="mailto:nonnumbered@gmail.com"
+                        style="color: var(--accent); text-decoration: none"
+                        >nonnumbered@gmail.com</a
                     >
-                </div>
-            </section>
-
-            <footer class="footer">
-                <p>Thanks for visiting — feel free to reach out.</p>
-            </footer>
+                </p>
+                <button class="back-btn" onclick="showPage('home')">
+                    [ back ]
+                </button>
+            </div>
         </div>
 
         <script>
-            // smooth scroll for anchors
-            document.querySelectorAll('a[href^="#"]').forEach((a) => {
-                a.addEventListener("click", (e) => {
-                    const t = document.querySelector(a.getAttribute("href"));
-                    if (t) {
-                        e.preventDefault();
-                        t.scrollIntoView({
-                            behavior: "smooth",
-                            block: "start",
-                        });
-                    }
-                });
-            });
+            function showPage(pageId) {
+                // Hide all pages
+                document
+                    .querySelectorAll(".page")
+                    .forEach((page) => page.classList.remove("active"));
+                // Show selected page
+                document.getElementById(pageId).classList.add("active");
+            }
         </script>
     </body>
 </html>
