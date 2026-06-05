@@ -1,930 +1,271 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>nonnumbered </title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #ffffff;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
-            color: white;
-            padding: 100px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23333" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.1;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .name {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 0.3s forwards;
-        }
-
-        .title {
-            font-size: 1.5rem;
-            font-weight: 300;
-            margin-bottom: 30px;
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 0.6s forwards;
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            font-weight: 300;
-            max-width: 600px;
-            margin: 0 auto;
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 0.9s forwards;
-        }
-
-        /* Navigation */
-        nav {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 20px 0;
-            border-bottom: 1px solid #333;
-        }
-
-        .nav-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: #888;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: white;
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Sections */
-        section {
-            padding: 100px 0;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 60px;
-            text-align: center;
-            color: #000;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background: #000;
-            margin: 20px auto 0;
-        }
-
-        /* About */
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .about-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        .about-text p {
-            margin-bottom: 20px;
-        }
-
-        .about-text ul {
-            list-style: none;
-            margin-top: 20px;
-        }
-
-        .about-text li {
-            margin-bottom: 15px;
-            padding-left: 30px;
-            position: relative;
-        }
-
-        .about-text li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: #000;
-            font-weight: bold;
-        }
-
-        /* Skills */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .skill-category {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 10px;
-            border: 1px solid #e9ecef;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .skill-category:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .skill-category h3 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            color: #000;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .skill-tag {
-            background: #000;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .skill-tag:hover {
-            background: #333;
-            transform: scale(1.05);
-        }
-
-        /* Projects */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .project-card {
-            background: white;
-            border: 1px solid #e9ecef;
-            border-radius: 15px;
-            padding: 30px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.05), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .project-card:hover::before {
-            left: 100%;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
-            border-color: #000;
-        }
-
-        .project-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #000;
-        }
-
-        .project-description {
-            color: #666;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .project-status {
-            display: inline-block;
-            background: #f8f9fa;
-            color: #666;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            border: 1px solid #e9ecef;
-        }
-
-        /* Experience */
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: #000;
-            transform: translateX(-50%);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 60px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .timeline-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .timeline-item:nth-child(odd) .timeline-content {
-            margin-left: 0;
-            margin-right: 50px;
-            text-align: right;
-        }
-
-        .timeline-item:nth-child(even) .timeline-content {
-            margin-left: 50px;
-            margin-right: 0;
-            text-align: left;
-        }
-
-        .timeline-marker {
-            position: absolute;
-            left: 50%;
-            top: 20px;
-            width: 20px;
-            height: 20px;
-            background: #000;
-            border-radius: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-        }
-
-        .timeline-content {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            border: 1px solid #e9ecef;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .timeline-content:hover {
-            transform: scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .timeline-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #000;
-        }
-
-        .timeline-company {
-            font-size: 1rem;
-            color: #fff;
-            margin-bottom: 15px;
-        }
-
-        .timeline-date {
-            font-size: 0.9rem;
-            color: #888;
-            margin-bottom: 15px;
-        }
-
-        .timeline-description {
-            color: #555;
-            line-height: 1.6;
-        }
-
-        /* Contact */
-        .contact-content {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .contact-text {
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-            color: #555;
-        }
-
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .contact-link {
-            display: inline-block;
-            background: #000;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border: 2px solid #000;
-        }
-
-        .contact-link:hover {
-            background: white;
-            color: #000;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Status */
-        .status-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .status-item {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid #e9ecef;
-            transition: transform 0.3s ease;
-        }
-
-        .status-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .status-label {
-            font-weight: 600;
-            color: #000;
-            margin-bottom: 10px;
-        }
-
-        .status-value {
-            color: #666;
-        }
-
-        /* Footer */
-        footer {
-            background: #000;
-            color: white;
-            text-align: center;
-            padding: 60px 0;
-        }
-
-        .footer-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .footer-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-
-        .footer-text {
-            color: #ccc;
-            margin-bottom: 30px;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>nonnumbered</title>
+        <style>
+            :root {
+                --bg: #000000;
+                --panel: #0b0b0b;
+                --fg: #efeaff; /* very light purple for readable text */
+                --muted: #bfb5d9; /* soft muted purple */
+                --accent: #8b5cf6; /* main purple highlight */
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            * {
+                box-sizing: border-box;
             }
-        }
+            html,
+            body {
+                height: 100%;
+            }
+            body {
+                margin: 0;
+                font-family:
+                    Inter,
+                    system-ui,
+                    -apple-system,
+                    "Segoe UI",
+                    Roboto,
+                    "Helvetica Neue",
+                    Arial;
+                background: var(--bg);
+                color: var(--fg);
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                line-height: 1.5;
+            }
+            .container {
+                max-width: 920px;
+                margin: 0 auto;
+                padding: 36px;
+            }
 
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
+            header {
+                padding: 64px 0;
+                text-align: center;
             }
-            to {
-                opacity: 1;
-                transform: translateX(0);
+            .brand {
+                font-weight: 700;
+                font-size: 0.95rem;
+                letter-spacing: 0.06em;
+                color: var(--accent);
             }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
             .name {
-                font-size: 2.5rem;
+                font-size: 2.6rem;
+                margin: 6px 0;
+                color: var(--accent);
+            }
+            .role {
+                color: var(--muted);
+                font-weight: 400;
+            }
+            .subtitle {
+                margin-top: 12px;
+                color: var(--muted);
+                max-width: 70%;
+                margin-left: auto;
+                margin-right: auto;
             }
 
-            .title {
-                font-size: 1.2rem;
+            nav {
+                display: flex;
+                justify-content: center;
+                gap: 16px;
+                padding: 10px 0;
+            }
+            nav a {
+                color: var(--muted);
+                text-decoration: none;
+                padding: 8px 12px;
+                border-radius: 10px;
+                font-weight: 600;
+            }
+            nav a:hover {
+                color: var(--fg);
+                background: rgba(
+                    139,
+                    92,
+                    246,
+                    0.1
+                ); /* subtle purple highlight */
             }
 
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
+            .section {
+                padding: 40px 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.03);
+            }
+            .section h2 {
+                font-size: 1.05rem;
+                margin-bottom: 8px;
+            }
+            .muted {
+                color: var(--muted);
+            }
+            .grid {
+                display: grid;
+                gap: 12px;
+            }
+            .tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .tag {
+                background: rgba(139, 92, 246, 0.06);
+                padding: 6px 12px;
+                border-radius: 999px;
+                font-size: 0.92rem;
+                color: var(--accent);
+                border: 1px solid rgba(139, 92, 246, 0.14);
             }
 
-            .timeline::before {
-                left: 20px;
+            .card {
+                background: rgba(255, 255, 255, 0.02);
+                padding: 14px;
+                border-radius: 10px;
+            }
+            .buttons {
+                display: flex;
+                gap: 12px;
+                margin-top: 12px;
+                flex-wrap: wrap;
+            }
+            a.button {
+                display: inline-block;
+                background: var(--accent);
+                color: var(--bg);
+                padding: 10px 14px;
+                border-radius: 999px;
+                text-decoration: none;
+                font-weight: 700;
+                box-shadow: 0 6px 18px rgba(139, 92, 246, 0.16);
+                transition:
+                    transform 0.12s ease,
+                    box-shadow 0.12s ease;
+            }
+            a.button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 30px rgba(139, 92, 246, 0.22);
             }
 
-            .timeline-item:nth-child(odd) .timeline-content,
-            .timeline-item:nth-child(even) .timeline-content {
-                margin-left: 50px;
-                margin-right: 0;
-                text-align: left;
+            .footer {
+                padding: 36px 0;
+                text-align: center;
+                color: var(--muted);
             }
 
-            .timeline-marker {
-                left: 20px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-        }
-
-        /* Scroll animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <canvas id="nn-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:auto;"></canvas>
-        <div class="container">
-            <div class="header-content">
-                <h1 class="name">Hi, I'm nonnumbered</h1>
-                <p class="title">Java developer | biliards player | Tech Enthusiast</p>
-                <p class="subtitle">Hello my name is nonnumbered and i know Computers.</p>
-            </div>
-        </div>
-    <script>
-    // Interactive Neural Network Animation
-    window.addEventListener('DOMContentLoaded', () => {
-        const canvas = document.getElementById('nn-canvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = document.querySelector('header').offsetHeight;
-        let mouse = { x: width/2, y: height/2 };
-        const NODES = 24;
-        const nodes = [];
-        const links = [];
-        // Node generation
-        for (let i = 0; i < NODES; i++) {
-            nodes.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                vx: (Math.random()-0.5)*0.7,
-                vy: (Math.random()-0.5)*0.7,
-                r: 5 + Math.random()*2
-            });
-        }
-        // Link generation (randomly connect nodes)
-        for (let i = 0; i < NODES; i++) {
-            for (let j = i+1; j < NODES; j++) {
-                if (Math.random() < 0.18) {
-                    links.push([i, j]);
+            @media (max-width: 600px) {
+                .name {
+                    font-size: 1.8rem;
+                }
+                .container {
+                    padding: 20px;
+                }
+                .subtitle {
+                    max-width: 100%;
                 }
             }
-        }
-        // Mouse interaction
-        canvas.addEventListener('mousemove', e => {
-            const rect = canvas.getBoundingClientRect();
-            mouse.x = e.clientX - rect.left;
-            mouse.y = e.clientY - rect.top;
-        });
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = document.querySelector('header').offsetHeight;
-        });
-        function draw() {
-            ctx.clearRect(0, 0, width, height);
-            // Draw links
-            ctx.save();
-            ctx.globalAlpha = 0.5;
-            ctx.strokeStyle = '#fff';
-            ctx.lineWidth = 1.2;
-            for (const [i, j] of links) {
-                ctx.beginPath();
-                ctx.moveTo(nodes[i].x, nodes[i].y);
-                ctx.lineTo(nodes[j].x, nodes[j].y);
-                ctx.stroke();
-            }
-            ctx.restore();
-            // Draw nodes
-            for (const node of nodes) {
-                ctx.beginPath();
-                ctx.arc(node.x, node.y, node.r, 0, 2*Math.PI);
-                ctx.fillStyle = '#fff';
-                ctx.shadowColor = '#fff';
-                ctx.shadowBlur = 8;
-                ctx.fill();
-                ctx.shadowBlur = 0;
-            }
-        }
-        function update() {
-            for (const node of nodes) {
-                // Move nodes
-                node.x += node.vx;
-                node.y += node.vy;
-                // Bounce off edges
-                if (node.x < node.r || node.x > width-node.r) node.vx *= -1;
-                if (node.y < node.r || node.y > height-node.r) node.vy *= -1;
-                // Mouse repulsion
-                const dx = node.x - mouse.x;
-                const dy = node.y - mouse.y;
-                const dist = Math.sqrt(dx*dx + dy*dy);
-                if (dist < 80) {
-                    node.vx += dx/dist*0.2;
-                    node.vy += dy/dist*0.2;
-                }
-                // Limit velocity
-                node.vx = Math.max(-1.2, Math.min(1.2, node.vx));
-                node.vy = Math.max(-1.2, Math.min(1.2, node.vy));
-            }
-        }
-        function animate() {
-            update();
-            draw();
-            requestAnimationFrame(animate);
-        }
-        animate();
-    });
-    </script>
-    </header>
-
-    <!-- Navigation -->
-    <nav>
+        </style>
+    </head>
+    <body>
         <div class="container">
-            <div class="nav-content">
-                <div class="nav-logo">nonnumbered</div>
-                <div class="nav-links">
-                    <a href="#about">About</a>
-                    <a href="#skills">Skills</a>
-                    <a href="#projects">Projects</a>
-                    <a href="#experience">Experience</a>
-                    <a href="#education">Education</a>
-                    <a href="#contact">Contact</a>
+            <header>
+                <div class="brand">nonnumbered</div>
+                <h1 class="name">Hi — I'm nonnumbered</h1>
+                <div class="role">
+                    Java developer · billiards player · tech enthusiast
                 </div>
-            </div>
-        </div>
-    </nav>
+                <p class="subtitle">
+                    I like simple, useful software and pleasant dark UIs. I care
+                    about FOSS, UX and learning by building.
+                </p>
+            </header>
 
-    <!-- About Section -->
-    <section id="about" class="fade-in">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>I am a degen that's only talent is CS</p>
-                    <p><strong>What drives me:</strong></p>
-                    <ul>
-                        <li>FOSS</li>
-                        <li>nice UI/UX</li>
-                        <li>simplicity</li>
-                        <li>Collaboration and knowledge sharing</li>
-                    </ul>
+            <nav>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <section id="about" class="section">
+                <h2>About</h2>
+                <p>
+                    I am a degen whose main talent is computer science. Every
+                    project is an opportunity to learn and improve.
+                </p>
+            </section>
+
+            <section id="skills" class="section">
+                <h2>Skills</h2>
+                <div class="tags">
+                    <span class="tag">Java</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">Rust</span>
+                    <span class="tag">HTML</span>
+                    <span class="tag">CSS</span>
+                    <span class="tag">Linux</span>
+                    <span class="tag">x64 Assembly</span>
                 </div>
-                <div class="about-text">
-                    <p>I believe in the power of technology to transform lives and create meaningful impact. My journey in software development has taught me the importance of not just writing code, but crafting solutions that truly serve their purpose.</p>
-                    <p>Every project is an opportunity to learn something new, push boundaries, and create something that didn't exist before.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="fade-in">
-        <div class="container">
-            <h2 class="section-title">Skills & Technologies</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Languages I Know</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">HTML5</span>
-                        <span class="skill-tag">CSS3</span>
-                        <span class="skill-tag">Linux</span>
-                        <span class="skill-tag">x64 Assembly</span>
-                        <span class="skill-tag">Rust</span>
-
+            <section id="projects" class="section">
+                <h2>Projects</h2>
+                <div class="grid">
+                    <div class="card">
+                        <strong>Portfolio website</strong>
+                        <div class="muted">
+                            This very site — clean and minimal.
+                        </div>
+                    </div>
+                    <div class="card">
+                        <strong>Health website</strong>
+                        <div class="muted">
+                            In progress — health & wellness tracking app.
+                        </div>
                     </div>
                 </div>
-                <div class="skill-category">
-                    <h3>Tools & Platforms</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">VSCode</span>
-                        <span class="skill-tag">lazyvim</span>
-                        <span class="skill-tag">tmux</span>
-                        <span class="skill-tag">perplexity</span>
-                    </div>
+            </section>
+
+            <section id="contact" class="section">
+                <h2>Contact</h2>
+                <p class="muted">
+                    Open to full-time, freelance, and open source contributions.
+                </p>
+                <div class="buttons">
+                    <a
+                        class="button"
+                        href="https://github.com/nonnumbered"
+                        target="_blank"
+                        rel="noopener"
+                        >GitHub</a
+                    >
+                    <a class="button" href="mailto:nonnumbered@gmail.com"
+                        >Email</a
+                    >
                 </div>
-            </div>
+            </section>
+
+            <footer class="footer">
+                <p>Thanks for visiting — feel free to reach out.</p>
+            </footer>
         </div>
-    </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="fade-in">
-        <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <h3 class="project-title">Coming Soon</h3>
-                    <p class="project-description">Projects are currently in development. Check back soon to see what I've been working on.</p>
-                    <span class="project-status">In Progress</span>
-                </div>
-
-                <div class="project-card">
-                    <h3 class="project-title">Portfolio Website</h3>
-                    <p class="project-description">This very portfolio website, built with modern HTML and CSS, featuring smooth animations and responsive design.</p>
-                    <span class="project-status">Completed</span>
-                </div>
-                  </div>
-                  <div class="project-card">
-                    <h3 class="project-title">health website</h3>
-                    <p class="project-description">A web application designed to help users manage their health and wellness, featuring personalized health tracking and resources.</p>
-                    <span class="project-status">In Progress</span>
-                  </div>
-                </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience" class="fade-in">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <h3>Java Certified</h3>
-            <p><strong>Suncoast High School</strong> &mdash; May 2025 - Present</p>
-            <p>Achieved Java certification through rigorous coursework and examination. Developed strong foundational and advanced Java programming skills. Participated in collaborative coding projects and peer code reviews.</p>
-        </div>
-    </section>
-
-    <!-- Education Section -->
-    <section id="education" class="fade-in">
-        <div class="container">
-            <h2 class="section-title">Education</h2>
-            <h3>Suncoast Computer Science Program</h3>
-            <p><strong>Suncoast High School</strong> &mdash; 2024 - Present</p>
-            <p>GPA: 3.6/4.0. Relevant Coursework: Java, Accelerated Math. Activities: Computer Science Club, Hackathon Participant. Computer Science Program focusing on programming fundamentals.</p>
-        </div>
-    </section>
-
-    <!-- Current Work Section -->
-    <section id="current-work" class="fade-in">
-        <div class="container">
-            <h2 class="section-title">What I'm Working On</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Java Diploma</h3>
-                    <p>Working towards advanced Java certification and mastery of enterprise development concepts.</p>
-                </div>
-                <div class="skill-category">
-                    <h3>Assembly Language</h3>
-                    <p>Exploring low-level programming and computer architecture through x64 assembly.</p>
-                </div>
-                <div class="skill-category">
-                    <h3>Web Development</h3>
-                    <p>Enhancing HTML and CSS skills to create modern, responsive web applications.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="fade-in">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <p class="contact-text">I'm always open to discussing new opportunities, interesting projects, or just having a friendly chat about technology.</p>
-                <div class="contact-links">
-                    <a href="https://github.com/nonnumbered" class="contact-link">GitHub</a>
-                    <a href="https://twitter.com/nonnumbered" class="contact-link">Twitter</a>
-                    <a href="mailto:nonnumbered@gmail.com" class="contact-link">Email</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Status Section -->
-    <section id="status" class="fade-in">
-        <div class="container">
-            <h2 class="section-title">Current Status</h2>
-            <div class="status-grid">
-                <div class="status-item">
-                    <div class="status-label">Open to</div>
-                    <div class="status-value">Full-time opportunities, Freelance projects, Open source contributions</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-label">Remote</div>
-                    <div class="status-value">Available for remote work</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-label">Availability</div>
-                    <div class="status-value">Starting immediately</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <h3 class="footer-title">Thanks for visiting</h3>
-                <p class="footer-text">Feel free to reach out if you'd like to collaborate on something amazing.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+        <script>
+            // smooth scroll for anchors
+            document.querySelectorAll('a[href^="#"]').forEach((a) => {
+                a.addEventListener("click", (e) => {
+                    const t = document.querySelector(a.getAttribute("href"));
+                    if (t) {
+                        e.preventDefault();
+                        t.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                        });
+                    }
+                });
             });
-        }, observerOptions);
-
-        // Observe all sections
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Add scroll effect to navigation
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 100) {
-                nav.style.background = 'rgba(0, 0, 0, 0.98)';
-            } else {
-                nav.style.background = 'rgba(0, 0, 0, 0.95)';
-            }
-        });
-
-        // Add typing effect to name
-        const name = document.querySelector('.name');
-        const text = name.textContent;
-        name.textContent = '';
-
-        let i = 0;
-        const typeWriter = () => {
-            if (i < text.length) {
-                name.textContent += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
-            }
-        };
-
-        setTimeout(typeWriter, 1000);
-    </script>
-</body>
+        </script>
+    </body>
 </html>
